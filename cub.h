@@ -6,12 +6,16 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 10:47:03 by hadufer           #+#    #+#             */
-/*   Updated: 2022/03/12 13:56:13 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/03/13 13:37:35 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB_H
 # define CUB_H
+# define PI 3.14159265359
+# define P2 PI/2
+# define P3 3*PI/2
+# define DR 0.0174533
 # define KEY_ESCAPE 53
 # define KEY_S 13
 # define KEY_A 0
@@ -35,7 +39,9 @@ typedef struct s_player
 {
 	int			x;
 	int			y;
-
+	float		a;
+	float		dx;
+	float		dy;
 }				t_player;
 
 typedef struct s_data {

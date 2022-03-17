@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 10:47:03 by hadufer           #+#    #+#             */
-/*   Updated: 2022/03/13 13:37:35 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/03/16 13:52:56 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 # define PI 3.14159265359
 # define P2 PI/2
 # define P3 3*PI/2
-# define DR 0.0174533
+# define DR 0.01745329252
 # define KEY_ESCAPE 53
 # define KEY_S 13
 # define KEY_A 0
@@ -42,6 +42,14 @@ typedef struct s_player
 	float		a;
 	float		dx;
 	float		dy;
+
+	// raycast
+	float		distH;
+	float		hx;
+	float		hy;
+	float		distV;
+	float		vx;
+	float		vy;
 }				t_player;
 
 typedef struct s_data {
@@ -60,4 +68,5 @@ typedef struct s_data {
 // UTILS
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void	draw_line(t_data *data, t_vec2 a, t_vec2 b, int color);
+t_vec2	new_vec2(float x, float y);
 #endif

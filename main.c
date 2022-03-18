@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 10:46:51 by hadufer           #+#    #+#             */
-/*   Updated: 2022/03/17 13:38:28 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/03/18 18:51:47 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,20 +244,55 @@ void	compute_draw_ray(t_data *data)
 
 void	key_handler(int keycode, t_data *data)
 {
+	int xo = 0;
+	int yo = 0;
+	if (data->ply.dx < 0)
+		xo -= 20;
+	else
+		xo += 20;
+	if (data->ply.dy < 0)
+		yo -= 20;
+	else
+		yo += 20;
+	int ipx=data->ply.x >> 6;
+	int ipx_add_xo=(data->ply.x+xo) >> 6;
+	int ipx_sub_xo=(data->ply.x-xo) >> 6;
+	int ipy=data->ply.y >> 6;
+	int ipy_add_yo=(data->ply.y+yo) >> 6;
+	int ipy_sub_yo=(data->ply.y-yo) >> 6;
 	if (keycode == KEY_W)
 	{
-		data->ply.x -= round(data->ply.dx);
-		data->ply.y -= round(data->ply.dy);
+	
+		if(map[ipy * MapX + ipx_add_xo] == 0)
+			data->ply.x += data->ply.dx;
+  		if(map[ipy_add_yo * MapX + ipx] == 0)
+		  	data->ply.y += data->ply.dy;
+		// data->ply.x -= round(data->ply.dx);
+		// data->ply.y -= round(data->ply.dy);
 	}
 	else if (keycode == KEY_S)
 	{
-		data->ply.x += round(data->ply.dx);
-		data->ply.y += round(data->ply.dy);
+		if(map[ipy * MapX + ipx_sub_xo] == 0)
+			data->ply.x -= data->ply.dx;
+  		if(map[ipy_sub_yo * MapX + ipx] == 0)
+		  	data->ply.y -= data->ply.dy;
+		// data->ply.x -= round(data->ply.dx);
+		// data->ply.y -= round(data->ply.dy);
 	}
 	else if (keycode == KEY_A)
 	{
-		data->ply.x += round(cos(data->ply.a - P2) * 5);
-		data->ply.y += round(sin(data->ply.a - P2) * 5);
+		// (-(int)(double)round((double)sin(data->ply.a + (3.14159265359 / 2))) * MapX) + (ipy * MapX + ipx_sub_xo) // check a gauche
+		//	(-(int)(double)round((double)cos(data->ply.a + (3.14159265359 / 2))) * MapX) + (ipy_sub_yo * MapX + ipx) // check a droite
+		if(map[ipy * MapX + (int)round(sin(data->ply.a - P2)) * ipx_add_xo] == 0)
+		{
+			data->ply.x += round(cos(data->ply.a - P2) * 5);;
+		}
+		if(map[ipy_add_yo * MapX + (int)round(cos(data->ply.a - P2)) * ipx] == 0)
+		{
+			data->ply.y += round(sin(data->ply.a - P2) * 5);
+		}
+		// data->ply.x += round(cos(data->ply.a - P2) * 5);
+		// data->ply.y += round(sin(data->ply.a - P2) * 5);
 	}
 	else if (keycode == KEY_D)
 	{
@@ -328,8 +363,10 @@ int	main(int argc, char **argv)
 
 	data.s_height = 1000;
 	data.s_width = 1500;
-	data.ply.x = 250;
-	data.ply.y = 250;
+	int start_mapX = 3;
+	int start_mapY = 3;
+	data.ply.x = start_mapX * MapTile / 2;
+	data.ply.y = start_mapY * MapTile / 2;
 	data.ply.a = 45 * DR;
 	data.ply.dx = cos(data.ply.a) * 5;
 	data.ply.dy = sin(data.ply.a) * 5;

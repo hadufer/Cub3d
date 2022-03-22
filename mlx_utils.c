@@ -6,11 +6,16 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 13:02:01 by hadufer           #+#    #+#             */
-/*   Updated: 2022/03/15 13:53:11 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/03/21 18:05:17 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
+
+int	create_trgb(int t, int r, int g, int b)
+{
+	return (t << 24 | r << 16 | g << 8 | b);
+}
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {

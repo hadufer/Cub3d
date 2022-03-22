@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 10:47:03 by hadufer           #+#    #+#             */
-/*   Updated: 2022/03/18 11:14:04 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/03/22 11:31:32 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,13 @@ typedef struct s_data {
 	int			endian;
 	int			s_width;
 	int			s_height;
+	int			*tex;
 	t_player	ply;
 }				t_data;
 
 // UTILS
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
+int		create_trgb(int t, int r, int g, int b);
 void	draw_line(t_data *data, t_vec2 a, t_vec2 b, int color);
 t_vec2	new_vec2(float x, float y);
 #endif

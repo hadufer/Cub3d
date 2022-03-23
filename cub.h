@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 10:47:03 by hadufer           #+#    #+#             */
-/*   Updated: 2022/03/22 11:31:32 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/03/23 16:29:33 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,10 @@ typedef struct s_data {
 	int			endian;
 	int			s_width;
 	int			s_height;
-	int			*tex;
+	int			*texN;
+	int			*texS;
+	int			*texE;
+	int			*texW;
 	t_player	ply;
 }				t_data;
 

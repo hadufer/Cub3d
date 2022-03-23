@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 10:46:51 by hadufer           #+#    #+#             */
-/*   Updated: 2022/03/23 12:34:57 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/03/23 16:33:56 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int map[]={
 	1,1,1,1,1,1,1,1,
 };
 
-char	*relative_path = "./textures/brick.xpm";
 int		img_xpm_width;
 int		img_xpm_height;
 int		**tex;
@@ -254,8 +253,16 @@ void	compute_draw_ray(t_data *data)
 		}
 		while (y < lineH)
 		{
-			int c = *(int *)(data->tex + (int)ty * 32 + (int)(tx));
-			draw_square(data, r * 2 + MapTile * MapX, y + lineO, r * 2 + MapTile * MapX + 2, y + lineO + 2, c);
+			int tex;
+			if ((ra < P2 || ra > P3) && data->ply.distV < data->ply.distH)
+				tex = *(int *)(data->texE + (int)ty * 32 + (int)(tx));
+			else if ((ra > P2 && ra < P3) && data->ply.distV < data->ply.distH)
+				tex = *(int *)(data->texW + (int)ty * 32 + (int)(tx));
+			else if ((ra > 0 && ra < PI) && data->ply.distV > data->ply.distH)
+				tex = *(int *)(data->texN + (int)ty * 32 + (int)(tx));
+			else
+				tex = *(int *)(data->texS + (int)ty * 32 + (int)(tx));
+			draw_square(data, r * 2 + MapTile * MapX, y + lineO, r * 2 + MapTile * MapX + 2, y + lineO + 2, tex);
 			ty += ty_step;
 			y++;
 		}
@@ -434,7 +441,10 @@ int	main(int argc, char **argv)
 	data.img = mlx_new_image(data.mlx, data.s_width, data.s_height);
 	data.addr = mlx_get_data_addr(data.img, &data.bits_per_pixel, &data.line_length,
 			&data.endian);
-	data.tex = load_image(&data, relative_path);
+	data.texN = load_image(&data, "./textures/brick.xpm");
+	data.texS = load_image(&data, "./textures/grass.xpm");
+	data.texE = load_image(&data, "./textures/metal.xpm");
+	data.texW = load_image(&data, "./textures/stone.xpm");
 	mlx_hook(data.win, 2, 1L << 0, (void *)key_handler, &data);
 	mlx_loop_hook(data.mlx, render, &data);
 	mlx_loop(data.mlx);

@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 10:46:51 by hadufer           #+#    #+#             */
-/*   Updated: 2022/03/23 16:33:56 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/03/24 12:13:13 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,18 @@
 #include <math.h>
 #include <stdlib.h>
 
-int MapX = 8, MapY = 8, MapTile = 64;
+int MapX = 8, MapY = 13, MapTile = 64;
 int map[]={
 	1,1,1,1,1,1,1,1,
 	1,0,0,0,0,0,0,1,
 	1,1,1,0,0,0,0,1,
 	1,0,0,0,0,0,0,1,
 	1,0,0,0,1,1,0,1,
+	1,0,0,0,0,0,0,1,
+	1,0,0,0,0,0,0,1,
+	1,0,0,0,0,0,0,1,
+	1,0,0,0,0,0,0,1,
+	1,0,0,0,0,0,0,1,
 	1,0,0,0,0,0,0,1,
 	1,0,0,0,0,0,0,1,
 	1,1,1,1,1,1,1,1,
@@ -143,9 +148,9 @@ void	compute_draw_ray(t_data *data)
 		{
 			rx = data->ply.x;
 			ry = data->ply.y;
-			dof = MapY;
+			dof = MapX;
 		}
-		while (dof < MapY)
+		while (dof < MapX)
 		{
 			mx = (int)(rx) >> 6;
 			my = (int)(ry) >> 6;
@@ -155,7 +160,7 @@ void	compute_draw_ray(t_data *data)
 				data->ply.vx = rx;
 				data->ply.vy = ry;
 				data->ply.distV = dist_2d(data->ply.x, data->ply.y, data->ply.vx, data->ply.vy, data->ply.a);
-				dof = MapY;
+				dof = MapX;
 			}
 			else
 			{
@@ -191,7 +196,7 @@ void	compute_draw_ray(t_data *data)
 			ry = data->ply.y;
 			dof = MapY;
 		}
-		while (dof < MapX)
+		while (dof < MapY)
 		{
 			mx = (int)(rx) >> 6;
 			my = (int)(ry) >> 6;
@@ -201,7 +206,7 @@ void	compute_draw_ray(t_data *data)
 				data->ply.hx = rx;
 				data->ply.hy = ry;
 				data->ply.distH = dist_2d(data->ply.x, data->ply.y, data->ply.hx, data->ply.hy, data->ply.a);
-				dof = MapX;
+				dof = MapY;
 			}
 			else
 			{
@@ -228,16 +233,16 @@ void	compute_draw_ray(t_data *data)
 		if (ca > 2 * PI)
 			ca -= 2 * PI;
 		distT = distT * cos(ca);
-		int lineH = (MapTile * 320)/distT;
+		int lineH = (MapTile * 500)/distT;
 		float ty_step = 32.0/(float)lineH;
 		float ty_off = 0;
-		if (lineH > 320)
+		if (lineH > 500)
 		{
-			ty_off = (lineH - 320)/2.0;
-			lineH = 320;
+			ty_off = (lineH - 500)/2.0;
+			lineH = 500;
 		}
-		int lineO = 160 - (lineH >> 1);
-		plotLineWidth(data, data->ply.x, data->ply.y, rx, ry, 1.0, 0x00FF0000); // ray 2d
+		int lineO = 250 - (lineH >> 1);
+		plotLineWidth(data, data->ply.x / 4, data->ply.y / 4, rx / 4, ry / 4, 1.0, 0x00FF0000); // ray 2d
 		int y = 0;
 		float ty = ty_off * ty_step;
 		float tx;
@@ -262,7 +267,7 @@ void	compute_draw_ray(t_data *data)
 				tex = *(int *)(data->texN + (int)ty * 32 + (int)(tx));
 			else
 				tex = *(int *)(data->texS + (int)ty * 32 + (int)(tx));
-			draw_square(data, r * 2 + MapTile * MapX, y + lineO, r * 2 + MapTile * MapX + 2, y + lineO + 2, tex);
+			draw_square(data, r * 3, y + lineO, r * 3 + 3, y + lineO + 3, tex);
 			ty += ty_step;
 			y++;
 		}
@@ -395,13 +400,13 @@ void	draw_map_2d(t_data *data)
 	{
 		for (size_t x = 0; x < MapX; x++)
 		{
-			xo = x * MapTile;
-			yo = y * MapTile;
+			xo = x * MapTile / 4;
+			yo = y * MapTile / 4;
 			if (map[y * MapX+x] == 1)
 				color = 0x00000000;
 			else
 				color = 0x00FFFFFF;
-			draw_square(data, xo + 1, yo + 1, xo + MapTile - 1, yo + MapTile - 1, color);
+			draw_square(data, xo + 1, yo + 1, xo + MapTile / 4 - 1, yo + MapTile / 4 - 1, color);
 		}
 	}
 }
@@ -409,9 +414,13 @@ void	draw_map_2d(t_data *data)
 void	Draw2d(t_data *data)
 {
 	draw_background(data, 0x696969);
-	draw_map_2d(data);
-	draw_square(data, data->ply.x, data->ply.y, data->ply.x + 5, data->ply.y + 5, 0xFFD700);
+	// Floor
+	draw_square(data, 0, data->s_height / 2, data->s_width, data->s_height, 0x00FF0000);
+	// Sly
+	// draw_square(data, r * 2 + MapTile * MapX, y + lineO, r * 2 + MapTile * MapX + 2, y + lineO + 2, tex);
 	compute_draw_ray(data);
+	draw_map_2d(data);
+	draw_square(data, data->ply.x / 4 , data->ply.y / 4 , data->ply.x / 4 + 5 , data->ply.y / 4 + 5 , 0xFFD700);
 }
 
 int	render(t_data *data)
@@ -427,8 +436,8 @@ int	main(int argc, char **argv)
 {
 	t_data	data;
 
-	data.s_height = 1000;
-	data.s_width = 1500;
+	data.s_height = 500;
+	data.s_width = 720;
 	int start_mapX = 3;
 	int start_mapY = 3;
 	data.ply.x = start_mapX * MapTile / 2;

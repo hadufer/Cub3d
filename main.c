@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 10:46:51 by hadufer           #+#    #+#             */
-/*   Updated: 2022/03/24 12:13:13 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/03/24 15:20:16 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,21 @@
 #include <math.h>
 #include <stdlib.h>
 
-int MapX = 8, MapY = 13, MapTile = 64;
+int MapX = 9, MapY = 13, MapTile = 64;
 int map[]={
-	1,1,1,1,1,1,1,1,
-	1,0,0,0,0,0,0,1,
-	1,1,1,0,0,0,0,1,
-	1,0,0,0,0,0,0,1,
-	1,0,0,0,1,1,0,1,
-	1,0,0,0,0,0,0,1,
-	1,0,0,0,0,0,0,1,
-	1,0,0,0,0,0,0,1,
-	1,0,0,0,0,0,0,1,
-	1,0,0,0,0,0,0,1,
-	1,0,0,0,0,0,0,1,
-	1,0,0,0,0,0,0,1,
-	1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,2,
+	1,0,0,0,0,0,0,1,2,
+	1,1,1,0,0,0,0,1,2,
+	1,0,0,0,0,0,0,1,2,
+	1,0,0,0,1,1,0,1,2,
+	1,0,0,0,0,0,0,1,2,
+	1,0,0,0,0,0,0,1,2,
+	1,0,0,0,0,0,0,1,1,
+	1,0,0,0,0,0,0,0,1,
+	1,0,0,0,0,0,0,1,1,
+	1,0,0,0,0,0,0,1,2,
+	1,0,0,0,0,0,0,1,2,
+	1,1,1,1,1,1,1,1,2,
 };
 
 int		img_xpm_width;
@@ -102,6 +102,25 @@ void plotLineWidth(t_data *data, int x0, int y0, int x1, int y1, float wd, int c
 				break;
 			err += dx;
 			y0 += sy;
+		}
+	}
+}
+
+void	draw_map_2d(t_data *data)
+{
+	int	x, y, xo, yo;
+	int	color;
+
+	for (size_t y = 0; y < MapY; y++)
+	{
+		for (size_t x = 0; x < MapX; x++)
+		{
+			xo = x * MapTile / 4;
+			yo = y * MapTile / 4;
+			if (map[y * MapX+x] == 1)
+				draw_square(data, xo + 1, yo + 1, xo + MapTile / 4 - 1, yo + MapTile / 4 - 1, 0x00000000);
+			else if (map[y * MapX+x] == 0)
+				draw_square(data, xo + 1, yo + 1, xo + MapTile / 4 - 1, yo + MapTile / 4 - 1, 0x00FFFFFF);
 		}
 	}
 }
@@ -391,36 +410,16 @@ int	*load_image(t_data *data, char *path)
 	return (tex);
 }
 
-void	draw_map_2d(t_data *data)
-{
-	int	x, y, xo, yo;
-	int	color;
-
-	for (size_t y = 0; y < MapY; y++)
-	{
-		for (size_t x = 0; x < MapX; x++)
-		{
-			xo = x * MapTile / 4;
-			yo = y * MapTile / 4;
-			if (map[y * MapX+x] == 1)
-				color = 0x00000000;
-			else
-				color = 0x00FFFFFF;
-			draw_square(data, xo + 1, yo + 1, xo + MapTile / 4 - 1, yo + MapTile / 4 - 1, color);
-		}
-	}
-}
-
 void	Draw2d(t_data *data)
 {
 	draw_background(data, 0x696969);
 	// Floor
 	draw_square(data, 0, data->s_height / 2, data->s_width, data->s_height, 0x00FF0000);
-	// Sly
-	// draw_square(data, r * 2 + MapTile * MapX, y + lineO, r * 2 + MapTile * MapX + 2, y + lineO + 2, tex);
+	// Sky
+	draw_square(data, 0, 0, data->s_width, data->s_height / 2, 0xFF);
 	compute_draw_ray(data);
 	draw_map_2d(data);
-	draw_square(data, data->ply.x / 4 , data->ply.y / 4 , data->ply.x / 4 + 5 , data->ply.y / 4 + 5 , 0xFFD700);
+	// draw_square(data, data->ply.x / 4 , data->ply.y / 4 , data->ply.x / 4 + 5 , data->ply.y / 4 + 5 , 0xFFD700);
 }
 
 int	render(t_data *data)
@@ -450,10 +449,10 @@ int	main(int argc, char **argv)
 	data.img = mlx_new_image(data.mlx, data.s_width, data.s_height);
 	data.addr = mlx_get_data_addr(data.img, &data.bits_per_pixel, &data.line_length,
 			&data.endian);
-	data.texN = load_image(&data, "./textures/brick.xpm");
-	data.texS = load_image(&data, "./textures/grass.xpm");
-	data.texE = load_image(&data, "./textures/metal.xpm");
-	data.texW = load_image(&data, "./textures/stone.xpm");
+	data.texN = load_image(&data, "./textures/wall_1.xpm");
+	data.texS = load_image(&data, "./textures/wall_2.xpm");
+	data.texE = load_image(&data, "./textures/wall_3.xpm");
+	data.texW = load_image(&data, "./textures/wall_4.xpm");
 	mlx_hook(data.win, 2, 1L << 0, (void *)key_handler, &data);
 	mlx_loop_hook(data.mlx, render, &data);
 	mlx_loop(data.mlx);

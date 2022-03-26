@@ -6,7 +6,7 @@
 #    By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/12 10:41:12 by hadufer           #+#    #+#              #
-#    Updated: 2022/03/12 10:49:01 by hadufer          ###   ########.fr        #
+#    Updated: 2022/03/26 19:04:27 by hadufer          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,29 +15,34 @@ CC = gcc
 RM = rm -f
 CFLAGS = -g
 
-SRCS =	$(wildcard *.c)
+SRCS =	$(wildcard *.c) \
+		$(wildcard srcs/*.c) \
+		$(wildcard srcs/parsing/*.c) \
+		$(wildcard srcs/parsing/check/*.c) \
+		$(wildcard srcs/utils/*.c)
 
 OBJS = $(SRCS:.c=.o)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -I/usr/include -I./Libftprintf/Libft -I./Libftprintf -Imlx -c $< -o $@
+	$(CC) $(CFLAGS) -I/usr/include -I./includes -I./libft -I./libft -Imlx -c $< -o $@
 
 all : $(NAME)
 
-$(NAME): $(OBJS) ./Libftprintf/libftprintf.a
-	$(CC) $(OBJS) -lmlx ./libftprintf/libftprintf.a -framework OpenGL -framework AppKit -o $(NAME)
+$(NAME): $(OBJS) ./libft/libft.a
+	$(CC) $(OBJS) -lmlx ./libft/libft.a -framework OpenGL -framework AppKit -o $(NAME)
 
-./Libftprintf/libftprintf.a:
-	$(MAKE) -C ./Libftprintf
+./libft/libft.a:
+	$(MAKE) -C ./libft bonus
+	cp libft/libft.a $(NAME)
 
 clean:
-	$(MAKE) -C ./Libftprintf $@
+	$(MAKE) -C ./libft $@
 	$(RM) $(OBJS)
 
 fclean: clean
-	$(MAKE) -C ./Libftprintf $@
+	$(MAKE) -C ./libft $@
 	$(RM) $(NAME)
 
-re: fclean $(NAME)
+re: fclean all
 
-.PHONY: all clean flcean re 
+.PHONY: all clean flcean re

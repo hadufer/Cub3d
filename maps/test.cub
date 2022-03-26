@@ -1,0 +1,12 @@
+WE ./xpm/wall_1.xpm
+EA ./xpm/wall_1.xpm
+C50,50,50
+F50,50,50
+
+	SO ./xpm/wall_1.xpm
+
+NO ./xpm/wall_1.xpm 
+
+1111111
+1W00001
+1111111

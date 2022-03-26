@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42nice.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 19:18:09 by hadufer           #+#    #+#             */
-/*   Updated: 2021/11/02 11:09:34 by hadufer          ###   ########.fr       */
+/*   Updated: 2021/07/29 19:48:18 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,3 +38,9 @@ char	*ft_substr(const char *s, unsigned int start, size_t len)
 	ret[i] = 0;
 	return (ret);
 }
+
+// int main()
+// {
+// 	char *s = ft_substr("tripouille", 100, 1);
+// 	printf("%s|\n",s);
+// }

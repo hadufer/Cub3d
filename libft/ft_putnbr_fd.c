@@ -1,25 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hadufer <hadufer@student.42nice.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/04 19:12:00 by hadufer           #+#    #+#             */
-/*   Updated: 2021/08/04 19:28:26 by hadufer          ###   ########.fr       */
+/*   Created: 2021/08/04 19:16:14 by hadufer           #+#    #+#             */
+/*   Updated: 2021/11/25 15:54:12 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <unistd.h>
 
-void	ft_putendl_fd(char *s, int fd)
+void	ft_putnbr_fd(int n, int fd)
 {
-	char	endl;
+	char	c;
 
-	if (!s)
+	if (n == -2147483648)
+	{
+		write(fd, "-2147483648", 11);
 		return ;
-	endl = '\n';
-	write(fd, s, ft_strlen(s));
-	write(fd, &endl, 1);
+	}
+	if (n < 0)
+	{
+		c = '-';
+		write(fd, &c, 1);
+		ft_putnbr_fd(-n, fd);
+	}
+	else if (n >= 10)
+	{
+		c = (n % 10) + 48;
+		ft_putnbr_fd((n / 10), fd);
+		write(fd, &c, 1);
+	}
+	else if (n < 10)
+	{
+		c = (n % 10) + 48;
+		write(fd, &c, 1);
+	}
 }

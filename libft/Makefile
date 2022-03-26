@@ -6,7 +6,7 @@
 #    By: hadufer <hadufer@student.42nice.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/27 17:09:00 by hadufer           #+#    #+#              #
-#    Updated: 2021/11/09 11:23:34 by hadufer          ###   ########.fr        #
+#    Updated: 2021/09/05 15:03:10 by hadufer          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ ft_putstr_fd.c \
 ft_split.c \
 ft_strchr.c \
 ft_strdup.c \
+ft_strndup.c \
 ft_striteri.c \
 ft_strjoin.c \
 ft_strlcat.c \

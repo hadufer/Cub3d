@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 10:46:51 by hadufer           #+#    #+#             */
-/*   Updated: 2022/03/26 19:11:24 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/03/26 19:52:55 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -433,29 +433,28 @@ int	render(t_data *data)
 
 int	main(int argc, char **argv)
 {
-	t_data	data;
 	t_data	*parsed;
 
 	parsed = parse(argc, argv);
-	data.s_height = 500;
-	data.s_width = 720;
+	(*parsed).s_height = 500;
+	(*parsed).s_width = 720;
 	int start_mapX = 3;
 	int start_mapY = 3;
-	data.ply.x = start_mapX * MapTile / 2;
-	data.ply.y = start_mapY * MapTile / 2;
-	data.ply.a = 45 * DR;
-	data.ply.dx = cos(data.ply.a) * 5;
-	data.ply.dy = sin(data.ply.a) * 5;
-	data.mlx = mlx_init();
-	data.win = mlx_new_window(data.mlx, data.s_width, data.s_height, "cub3d");
-	data.img = mlx_new_image(data.mlx, data.s_width, data.s_height);
-	data.addr = mlx_get_data_addr(data.img, &data.bits_per_pixel, &data.line_length,
-			&data.endian);
-	data.texN = load_image(&data, "./textures/wall_1.xpm");
-	data.texS = load_image(&data, "./textures/wall_2.xpm");
-	data.texE = load_image(&data, "./textures/wall_3.xpm");
-	data.texW = load_image(&data, "./textures/wall_4.xpm");
-	mlx_hook(data.win, 2, 1L << 0, (void *)key_handler, &data);
-	mlx_loop_hook(data.mlx, render, &data);
-	mlx_loop(data.mlx);
+	(*parsed).ply.x = start_mapX * MapTile / 2;
+	(*parsed).ply.y = start_mapY * MapTile / 2;
+	(*parsed).ply.a = 45 * DR;
+	(*parsed).ply.dx = cos((*parsed).ply.a) * 5;
+	(*parsed).ply.dy = sin((*parsed).ply.a) * 5;
+	(*parsed).mlx = mlx_init();
+	(*parsed).win = mlx_new_window((*parsed).mlx, (*parsed).s_width, (*parsed).s_height, "cub3d");
+	(*parsed).img = mlx_new_image((*parsed).mlx, (*parsed).s_width, (*parsed).s_height);
+	(*parsed).addr = mlx_get_data_addr((*parsed).img, &parsed->bits_per_pixel, &parsed->line_length,
+			&parsed->endian);
+	(*parsed).texN = load_image(parsed, "./textures/wall_1.xpm");
+	(*parsed).texS = load_image(parsed, "./textures/wall_2.xpm");
+	(*parsed).texE = load_image(parsed, "./textures/wall_3.xpm");
+	(*parsed).texW = load_image(parsed, "./textures/wall_4.xpm");
+	mlx_hook((*parsed).win, 2, 1L << 0, (void *)key_handler, parsed);
+	mlx_loop_hook((*parsed).mlx, render, parsed);
+	mlx_loop((*parsed).mlx);
 }

@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nferre <nferre@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 12:54:53 by nferre            #+#    #+#             */
-/*   Updated: 2022/03/25 17:18:56 by nferre           ###   ########.fr       */
+/*   Updated: 2022/03/26 19:16:10 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_H
 # define PARSING_H
 # include "cube.h"
+# include "cub.h"
 
 typedef struct s_coords
 {
@@ -32,31 +33,9 @@ typedef struct s_texture_coords
 
 }	t_texture_coords;
 
-typedef struct s_color
-{
-	int	r;
-	int	g;
-	int	b;
-}	t_color;
+typedef struct s_color t_color;
 
-typedef struct s_data
-{
-	char	*path_to_north;
-	t_color	north_texture;
-	char	*path_to_south;
-	t_color	south_texture;
-	char	*path_to_east;
-	t_color	east_texture;
-	char	*path_to_west;
-	t_color	west_texture;
-	t_color	floor_color;
-	t_color	ceiling_color;
-	char	**map;
-	char	**file;
-	int		*int_map;
-	int		x;
-	int		y;
-}	t_data;
+typedef struct s_data t_data;
 
 //parsing
 

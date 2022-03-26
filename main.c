@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 10:46:51 by hadufer           #+#    #+#             */
-/*   Updated: 2022/03/24 15:20:16 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/03/26 19:11:24 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -434,7 +434,9 @@ int	render(t_data *data)
 int	main(int argc, char **argv)
 {
 	t_data	data;
+	t_data	*parsed;
 
+	parsed = parse(argc, argv);
 	data.s_height = 500;
 	data.s_width = 720;
 	int start_mapX = 3;

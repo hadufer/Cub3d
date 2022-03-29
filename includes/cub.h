@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 10:47:03 by hadufer           #+#    #+#             */
-/*   Updated: 2022/03/26 19:16:09 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/03/29 13:15:41 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,9 @@ typedef struct s_data {
 	int			x;
 	int			y;
 	t_player	ply;
+	int			ply_x;
+	int			ply_y;
+	char	player_direction;
 }				t_data;
 
 // UTILS

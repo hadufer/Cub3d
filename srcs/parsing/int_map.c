@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   int_map.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nferre <nferre@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 17:06:04 by nferre            #+#    #+#             */
-/*   Updated: 2022/03/25 17:43:11 by nferre           ###   ########.fr       */
+/*   Updated: 2022/03/29 11:37:48 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,20 @@ int	get_size_map(char **map, t_data *data)
 	return (data->y * data->x);
 }
 
+void	int_map(t_data *data, int *k, int i, int j)
+{		
+	if (data->map[i][j] == 'N')
+		data->player_direction = 'N';
+	if (data->map[i][j] == 'S')
+		data->player_direction = 'S';
+	if (data->map[i][j] == 'E')
+		data->player_direction = 'E';
+	if (data->map[i][j] == 'W')
+		data->player_direction = 'W';
+	*k += 1;
+	data->int_map[*k] = 2;
+}
+
 void	get_int_map(t_data *data)
 {
 	int	i;
@@ -48,7 +62,7 @@ void	get_int_map(t_data *data)
 		{
 			if (data->map[i][j] == 'N' || data->map[i][j] == 'E'
 				|| data->map[i][j] == 'W' || data->map[i][j] == 'S')
-				data->map[++k] = 0;
+				int_map(data, &k, i, j);
 			else if (ft_isdigit(data->map[i][j]) == 0)
 				data->int_map[++k] = -1;
 			else

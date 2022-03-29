@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nferre <nferre@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 07:46:03 by nferre            #+#    #+#             */
-/*   Updated: 2022/03/22 07:48:46 by nferre           ###   ########.fr       */
+/*   Updated: 2022/03/29 11:40:14 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,17 @@ void	print_color(t_color color)
 	printf("r : %d\n", color.r);
 	printf("g : %d\n", color.g);
 	printf("b : %d\n", color.b);
+}
+
+void	print_int_tab(int *tab, int x, int y)
+{
+	int	i;
+
+	i = -1;
+	while (++i != x * y)
+	{
+		printf("%d", tab[i]);
+		if (i % x == x - 1)
+			printf("\n");
+	}
 }

@@ -460,10 +460,10 @@ int	main(int argc, char **argv)
 		printf("\n");
 	}
 	init_game(parsed);
-	parsed->texN = load_image(parsed, "./textures/grass.xpm");
-	parsed->texS = load_image(parsed, "./textures/brick.xpm");
-	parsed->texE = load_image(parsed, "./textures/metal.xpm");
-	parsed->texW = load_image(parsed, "./textures/stone.xpm");
+	parsed->texN = load_image(parsed, parsed->path_to_north);
+	parsed->texS = load_image(parsed, parsed->path_to_south);
+	parsed->texE = load_image(parsed, parsed->path_to_east);
+	parsed->texW = load_image(parsed, parsed->path_to_west);
 	if (!parsed->texN || !parsed->texS || !parsed->texE || !parsed->texW)
 	{
 		printf("Error while loading texture");

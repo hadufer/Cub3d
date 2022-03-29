@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nferre <nferre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 12:54:53 by nferre            #+#    #+#             */
-/*   Updated: 2022/03/26 19:16:10 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/03/29 16:29:59 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void				check_if_map_empty(char *path);
 void				check_map(t_data *data);
 void				get_textures(t_data *data);
 void				get_int_map(t_data *data);
+void				check_texture_map(t_data *data, char x, char y);
 
 //utils
 

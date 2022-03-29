@@ -24,10 +24,6 @@
 # define KEY_LEFT 123
 # define KEY_RIGHT 124
 # define MAPTILE 64
-# define max(a,b) \
-   ({ __typeof__ (a) _a = (a); \
-       __typeof__ (b) _b = (b); \
-     _a > _b ? _a : _b; })
 # include <mlx.h>
 # include "cube.h"
 # include "parsing.h"
@@ -52,12 +48,10 @@ typedef struct s_player
 	float		a;
 	float		dx;
 	float		dy;
-
-	// raycast
-	float		distH;
+	float		disth;
 	float		hx;
 	float		hy;
-	float		distV;
+	float		distv;
 	float		vx;
 	float		vy;
 }				t_player;
@@ -72,10 +66,10 @@ typedef struct s_data {
 	int			endian;
 	int			s_width;
 	int			s_height;
-	int			*texN;
-	int			*texS;
-	int			*texE;
-	int			*texW;
+	int			*tex_n;
+	int			*tex_s;
+	int			*tex_e;
+	int			*tex_w;
 	int			img_xpm_width;
 	int			img_xpm_height;
 	char		*path_to_north;
@@ -96,10 +90,10 @@ typedef struct s_data {
 	t_player	ply;
 	int			ply_x;
 	int			ply_y;
-	char	player_direction;
-}				t_data;
+	char		player_direction;
+}					t_data;
 
-void	Draw2d(t_data *data);
+void	draw2d(t_data *data);
 int		render(t_data *data);
 void	init_player_direction(t_data *parsed);
 void	compute_draw_ray(t_data *data);

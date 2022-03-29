@@ -33,9 +33,9 @@ typedef struct s_texture_coords
 
 }	t_texture_coords;
 
-typedef struct s_color t_color;
+typedef struct s_color	t_color;
 
-typedef struct s_data t_data;
+typedef struct s_data	t_data;
 
 //parsing
 

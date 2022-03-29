@@ -126,7 +126,7 @@ void	compute_draw_ray(t_data *data)
 	{
 		dof = 0;
 		float	nTan = -tan(ra);
-		data->ply.distV = 1000000;
+		data->ply.distv = 1000000;
 		data->ply.vx = data->ply.x;
 		data->ply.vy = data->ply.y;
 		if (ra > P2 && ra < P3)
@@ -158,7 +158,7 @@ void	compute_draw_ray(t_data *data)
 			{
 				data->ply.vx = rx;
 				data->ply.vy = ry;
-				data->ply.distV = dist_2d(data->ply.x, data->ply.y, data->ply.vx, data->ply.vy);
+				data->ply.distv = dist_2d(data->ply.x, data->ply.y, data->ply.vx, data->ply.vy);
 				dof = data->x;
 			}
 			else
@@ -172,7 +172,7 @@ void	compute_draw_ray(t_data *data)
 		// Horizontal ray collide with wall
 		dof = 0;
 		float	aTan = -1/tan(ra);
-		data->ply.distH = 1000000;
+		data->ply.disth = 1000000;
 		data->ply.hx = data->ply.x;
 		data->ply.hy = data->ply.y;
 		if (ra > PI)
@@ -204,7 +204,7 @@ void	compute_draw_ray(t_data *data)
 			{
 				data->ply.hx = rx;
 				data->ply.hy = ry;
-				data->ply.distH = dist_2d(data->ply.x, data->ply.y, data->ply.hx, data->ply.hy);
+				data->ply.disth = dist_2d(data->ply.x, data->ply.y, data->ply.hx, data->ply.hy);
 				dof = data->y;
 			}
 			else
@@ -214,17 +214,17 @@ void	compute_draw_ray(t_data *data)
 				dof += 1;
 			}
 		}
-		if (data->ply.distV < data->ply.distH)
+		if (data->ply.distv < data->ply.disth)
 		{
 			rx = data->ply.vx;
 			ry = data->ply.vy;
-			distT = data->ply.distV;
+			distT = data->ply.distv;
 		}
-		if (data->ply.distH < data->ply.distV)
+		if (data->ply.disth < data->ply.distv)
 		{
 			rx = data->ply.hx;
 			ry = data->ply.hy;
-			distT = data->ply.distH;
+			distT = data->ply.disth;
 		}
 		float ca = data->ply.a - ra;
 		if (ca < 0)
@@ -245,7 +245,7 @@ void	compute_draw_ray(t_data *data)
 		int y = 0;
 		float ty = ty_off * ty_step;
 		float tx;
-		if (data->ply.distV < data->ply.distH)
+		if (data->ply.distv < data->ply.disth)
 		{
 			tx = (int)(ry/2.0)%32;
 			tx = 31 - tx;
@@ -258,14 +258,14 @@ void	compute_draw_ray(t_data *data)
 		while (y < lineH)
 		{
 			int tex;
-			if ((ra < P2 || ra > P3) && data->ply.distV < data->ply.distH)
-				tex = *(int *)(data->texE + (int)ty * 32 + (int)(tx));
-			else if ((ra > P2 && ra < P3) && data->ply.distV < data->ply.distH)
-				tex = *(int *)(data->texW + (int)ty * 32 + (int)(tx));
-			else if ((ra > 0 && ra < PI) && data->ply.distV > data->ply.distH)
-				tex = *(int *)(data->texS + (int)ty * 32 + (int)(tx));
+			if ((ra < P2 || ra > P3) && data->ply.distv < data->ply.disth)
+				tex = *(int *)(data->tex_e + (int)ty * 32 + (int)(tx));
+			else if ((ra > P2 && ra < P3) && data->ply.distv < data->ply.disth)
+				tex = *(int *)(data->tex_w + (int)ty * 32 + (int)(tx));
+			else if ((ra > 0 && ra < PI) && data->ply.distv > data->ply.disth)
+				tex = *(int *)(data->tex_s + (int)ty * 32 + (int)(tx));
 			else
-				tex = *(int *)(data->texN + (int)ty * 32 + (int)(tx));
+				tex = *(int *)(data->tex_n + (int)ty * 32 + (int)(tx));
 			if (y + lineO + 3 <= data->s_height)
 				draw_square(data, r * 3, y + lineO, r * 3 + 3, y + lineO + 3, tex);
 			ty += ty_step;
@@ -460,11 +460,11 @@ int	main(int argc, char **argv)
 		printf("\n");
 	}
 	init_game(parsed);
-	parsed->texN = load_image(parsed, parsed->path_to_north);
-	parsed->texS = load_image(parsed, parsed->path_to_south);
-	parsed->texE = load_image(parsed, parsed->path_to_east);
-	parsed->texW = load_image(parsed, parsed->path_to_west);
-	if (!parsed->texN || !parsed->texS || !parsed->texE || !parsed->texW)
+	parsed->tex_n = load_image(parsed, parsed->path_to_north);
+	parsed->tex_s = load_image(parsed, parsed->path_to_south);
+	parsed->tex_e = load_image(parsed, parsed->path_to_east);
+	parsed->tex_w = load_image(parsed, parsed->path_to_west);
+	if (!parsed->tex_n || !parsed->tex_s || !parsed->tex_e || !parsed->tex_w)
 	{
 		printf("Error while loading texture");
 		return (0);

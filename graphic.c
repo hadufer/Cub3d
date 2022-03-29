@@ -12,13 +12,13 @@
 
 #include "cub.h"
 
-void	Draw2d(t_data *data)
+void	draw2d(t_data *data)
 {
 	draw_background(data, 0x696969);
-	// Floor
-	draw_square(data, 0, data->s_height / 2, data->s_width, data->s_height, t_color_to_int(data->ceiling_color));
-	// Sky
-	draw_square(data, 0, 0, data->s_width, data->s_height / 2, t_color_to_int(data->floor_color));
+	draw_square(data, 0, data->s_height / 2, data->s_width,
+	data->s_height, t_color_to_int(data->ceiling_color));
+	draw_square(data, 0, 0, data->s_width, data->s_height / 2,
+		t_color_to_int(data->floor_color));
 	compute_draw_ray(data);
 	draw_map_2d(data);
 }
@@ -27,7 +27,7 @@ int	render(t_data *data)
 {
 	mlx_destroy_image(data->mlx, data->img);
 	data->img = mlx_new_image(data->mlx, data->s_width, data->s_height);
-	Draw2d(data);
+	draw2d(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
 	return (0);
 }

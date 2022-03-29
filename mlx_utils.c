@@ -21,7 +21,6 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
 
-	// Protection from horizontal line raycasting overflowing the screen size
 	if ((x < 0 || x > data->s_width) || (y < 0 || y > data->s_height))
 		return ;
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));

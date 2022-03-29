@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 10:47:03 by hadufer           #+#    #+#             */
-/*   Updated: 2022/03/29 15:59:50 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/03/29 16:20:33 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ typedef struct s_data {
 	int			*texS;
 	int			*texE;
 	int			*texW;
+	int			img_xpm_width;
+	int			img_xpm_height;
 	char		*path_to_north;
 	t_color		north_texture;
 	char		*path_to_south;
@@ -97,9 +99,19 @@ typedef struct s_data {
 	char	player_direction;
 }				t_data;
 
+void	Draw2d(t_data *data);
+int		render(t_data *data);
+void	init_player_direction(t_data *parsed);
+void	compute_draw_ray(t_data *data);
+void	draw_map_2d(t_data *data);
+void	draw_background(t_data *data, int color);
+void	draw_square(t_data *data, int x0, int y0, int x1, int y1, int color);
 // UTILS
+void	plotLineWidth(t_data *data, int x0, int y0, int x1, int y1, float wd, int color);
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 int		create_trgb(int t, int r, int g, int b);
 void	draw_line(t_data *data, t_vec2 a, t_vec2 b, int color);
 t_vec2	new_vec2(float x, float y);
+int		t_color_to_int(t_color col);
+float	dist_2d(float x0, float y0, float x1, float y1);
 #endif

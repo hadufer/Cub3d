@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 10:46:51 by hadufer           #+#    #+#             */
-/*   Updated: 2022/03/29 15:46:12 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/03/29 16:04:38 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,8 @@
 #include <math.h>
 #include <stdlib.h>
 
-int MapX = 9, MapY = 13, MapTile = 64;
-int map[]={
-	1,1,1,1,1,1,1,1,2,
-	1,0,0,0,0,0,0,1,2,
-	1,1,1,0,0,0,0,1,2,
-	1,0,0,0,0,0,0,1,2,
-	1,0,0,0,1,1,0,1,2,
-	1,0,0,0,0,0,0,1,2,
-	1,0,0,0,0,0,0,1,2,
-	1,0,0,0,0,0,0,1,1,
-	1,0,0,0,0,0,0,0,1,
-	1,0,0,0,0,0,0,1,1,
-	1,0,0,0,0,0,0,1,2,
-	1,0,0,0,0,0,0,1,2,
-	1,1,1,1,1,1,1,1,2,
-};
-
 int		img_xpm_width;
 int		img_xpm_height;
-int		**tex;
 
 void	draw_square(t_data *data, int x0, int y0, int x1, int y1, int color)
 {
@@ -115,12 +97,12 @@ void	draw_map_2d(t_data *data)
 	{
 		for (size_t x = 0; x < data->x; x++)
 		{
-			xo = x * MapTile / 4;
-			yo = y * MapTile / 4;
+			xo = x * MAPTILE / 4;
+			yo = y * MAPTILE / 4;
 			if (data->int_map[y * data->x + x] == 1)
-				draw_square(data, xo + 1, yo + 1, xo + MapTile / 4 - 1, yo + MapTile / 4 - 1, 0x00000000);
+				draw_square(data, xo + 1, yo + 1, xo + MAPTILE / 4 - 1, yo + MAPTILE / 4 - 1, 0x00000000);
 			else if (data->int_map[y * data->x + x] == 0)
-				draw_square(data, xo + 1, yo + 1, xo + MapTile / 4 - 1, yo + MapTile / 4 - 1, 0x00FFFFFF);
+				draw_square(data, xo + 1, yo + 1, xo + MAPTILE / 4 - 1, yo + MAPTILE / 4 - 1, 0x00FFFFFF);
 		}
 	}
 }
@@ -252,7 +234,7 @@ void	compute_draw_ray(t_data *data)
 		if (ca > 2 * PI)
 			ca -= 2 * PI;
 		distT = distT * cos(ca);
-		int lineH = (MapTile * 500)/distT;
+		int lineH = (MAPTILE * 500)/distT;
 		float ty_step = 32.0/(float)lineH;
 		float ty_off = 0;
 		if (lineH > 500)
@@ -283,9 +265,9 @@ void	compute_draw_ray(t_data *data)
 			else if ((ra > P2 && ra < P3) && data->ply.distV < data->ply.distH)
 				tex = *(int *)(data->texW + (int)ty * 32 + (int)(tx));
 			else if ((ra > 0 && ra < PI) && data->ply.distV > data->ply.distH)
-				tex = *(int *)(data->texN + (int)ty * 32 + (int)(tx));
-			else
 				tex = *(int *)(data->texS + (int)ty * 32 + (int)(tx));
+			else
+				tex = *(int *)(data->texN + (int)ty * 32 + (int)(tx));
 			if (y + lineO + 3 <= data->s_height)
 				draw_square(data, r * 3, y + lineO, r * 3 + 3, y + lineO + 3, tex);
 			ty += ty_step;
@@ -481,8 +463,8 @@ int	main(int argc, char **argv)
 	}
 	(*parsed).s_height = 500;
 	(*parsed).s_width = 720;
-	(*parsed).ply.x = parsed->ply_x * MapTile + MapTile / 2;
-	(*parsed).ply.y = parsed->ply_y * MapTile + MapTile / 2;
+	(*parsed).ply.x = parsed->ply_x * MAPTILE + MAPTILE / 2;
+	(*parsed).ply.y = parsed->ply_y * MAPTILE + MAPTILE / 2;
 	if (parsed->player_direction == 'N')
 		parsed->ply.a = P3;
 	else if (parsed->player_direction == 'S')
@@ -498,15 +480,13 @@ int	main(int argc, char **argv)
 	(*parsed).img = mlx_new_image((*parsed).mlx, (*parsed).s_width, (*parsed).s_height);
 	(*parsed).addr = mlx_get_data_addr((*parsed).img, &parsed->bits_per_pixel, &parsed->line_length,
 			&parsed->endian);
-	(*parsed).texN = load_image(parsed, parsed->path_to_north);
-	(*parsed).texS = load_image(parsed, parsed->path_to_south);
-	(*parsed).texE = load_image(parsed, parsed->path_to_east);
-	(*parsed).texW = load_image(parsed, parsed->path_to_west);
+	(*parsed).texN = load_image(parsed, "./textures/grass.xpm");
+	(*parsed).texS = load_image(parsed, "./textures/brick.xpm");
+	(*parsed).texE = load_image(parsed, "./textures/metal.xpm");
+	(*parsed).texW = load_image(parsed, "./textures/stone.xpm");
 	if (!parsed->texN || !parsed->texS || !parsed->texE || !parsed->texW)
-	return (1);
+		return (1);
 	mlx_hook((*parsed).win, 2, 1L << 0, (void *)key_handler, parsed);
 	mlx_loop_hook((*parsed).mlx, render, parsed);
 	mlx_loop((*parsed).mlx);
 }
-
-/**/

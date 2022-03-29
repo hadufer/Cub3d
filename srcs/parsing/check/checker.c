@@ -28,5 +28,6 @@ t_texture_coords	checker(char *path, t_data *data, int argc)
 	check_walls(path, i, data);
 	check_map(data);
 	check_number_maps(path, i);
+	check_number_texture(data);
 	return (texture_coords);
 }

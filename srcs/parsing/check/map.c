@@ -6,13 +6,13 @@
 /*   By: nferre <nferre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 13:24:27 by nferre            #+#    #+#             */
-/*   Updated: 2022/03/17 08:22:59 by nferre           ###   ########.fr       */
+/*   Updated: 2022/03/29 16:09:30 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-void	check_character_existance(t_data *data, char c)
+void	check_character_existance(t_data *data)
 {
 	int	i;
 	int	j;
@@ -23,7 +23,9 @@ void	check_character_existance(t_data *data, char c)
 		j = -1;
 		while (data->map[i][++j])
 		{
-			if (data->map[i][j] == c)
+			if (data->map[i][j] == '0' || data->map[i][j] == 'N'
+				|| data->map[i][j] == 'S' || data->map[i][j] == 'E'
+				|| data->map[i][j] == 'W')
 				return ;
 		}
 	}
@@ -56,6 +58,6 @@ void	check_directions(t_data *data)
 
 void	check_map(t_data *data)
 {
-	check_character_existance(data, '0');
+	check_character_existance(data);
 	check_directions(data);
 }

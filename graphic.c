@@ -15,9 +15,11 @@
 void	draw2d(t_data *data)
 {
 	draw_background(data, 0x696969);
-	draw_square(data, 0, data->s_height / 2, data->s_width,
-	data->s_height, t_color_to_int(data->ceiling_color));
-	draw_square(data, 0, 0, data->s_width, data->s_height / 2,
+	draw_square(data, new_vec2(0, data->s_height / 2),
+	new_vec2(data->s_width, data->s_height),
+		t_color_to_int(data->ceiling_color));
+	draw_square(data, new_vec2(0, 0),
+		new_vec2(data->s_width, data->s_height / 2),
 		t_color_to_int(data->floor_color));
 	compute_draw_ray(data);
 	draw_map_2d(data);

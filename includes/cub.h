@@ -95,7 +95,7 @@ void	init_player_direction(t_data *parsed);
 void	compute_draw_ray(t_data *data);
 void	draw_map_2d(t_data *data);
 void	draw_background(t_data *data, int color);
-void	draw_square(t_data *data, int x0, int y0, int x1, int y1, int color);
+void	draw_square(t_data *data, t_vec2 a, t_vec2 b, int color);
 // UTILS
 void	plotLineWidth(t_data *data, int x0, int y0, int x1, int y1, float wd, int color);
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);

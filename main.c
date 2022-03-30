@@ -14,17 +14,17 @@
 #include <math.h>
 #include <stdlib.h>
 
-void	draw_square(t_data *data, int x0, int y0, int x1, int y1, int color)
+void	draw_square(t_data *data, t_vec2 a, t_vec2 b, int color)
 {
 	int	i;
 	int	j;
 
-	i = x0;
-	j = y0;
-	while (i < x1)
+	i = a.x;
+	j = a.y;
+	while (i < b.x)
 	{
-		j = y0;
-		while (j < y1)
+		j = a.y;
+		while (j < b.y)
 		{
 			my_mlx_pixel_put(data, i, j, color);
 			j++;
@@ -101,9 +101,13 @@ void	draw_map_2d(t_data *data)
 			xo = x * MAPTILE / 4;
 			yo = y * MAPTILE / 4;
 			if (data->int_map[y * data->x + x] == 1)
-				draw_square(data, xo + 1, yo + 1, xo + MAPTILE / 4 - 1, yo + MAPTILE / 4 - 1, 0x00000000);
+				draw_square(data, new_vec2(xo + 1, yo + 1),
+					new_vec2(xo + MAPTILE / 4 - 1, yo + MAPTILE / 4 - 1),
+					0x00000000);
 			else if (data->int_map[y * data->x + x] == 0)
-				draw_square(data, xo + 1, yo + 1, xo + MAPTILE / 4 - 1, yo + MAPTILE / 4 - 1, 0x00FFFFFF);
+				draw_square(data, new_vec2(xo + 1, yo + 1),
+					new_vec2(xo + MAPTILE / 4 - 1, yo + MAPTILE / 4 - 1),
+					0x00FFFFFF);
 			x++;
 		}
 		y++;
@@ -267,7 +271,8 @@ void	compute_draw_ray(t_data *data)
 			else
 				tex = *(int *)(data->tex_n + (int)ty * 32 + (int)(tx));
 			if (y + lineO + 3 <= data->s_height)
-				draw_square(data, r * 3, y + lineO, r * 3 + 3, y + lineO + 3, tex);
+				draw_square(data, new_vec2(r * 3, y + lineO),
+					new_vec2(r * 3 + 3, y + lineO + 3), tex);
 			ty += ty_step;
 			y++;
 		}
@@ -415,7 +420,6 @@ void	map_get_ply_pos_fix(t_data *parsed)
 	}
 }
 
-
 void	init_game(t_data *parsed)
 {
 	parsed->s_height = 500;
@@ -431,7 +435,6 @@ void	init_game(t_data *parsed)
 	parsed->addr = mlx_get_data_addr((*parsed).img, &parsed->bits_per_pixel, &parsed->line_length,
 			&parsed->endian);
 }
-
 
 void	init_player_direction(t_data *parsed)
 {
@@ -451,14 +454,6 @@ int	main(int argc, char **argv)
 
 	parsed = parse(argc, argv);
 	map_get_ply_pos_fix(parsed);
-	for (int i = 0; i < parsed->y; i++)
-	{
-		for (int y = 0; y < parsed->x; y++)
-		{
-			printf("%d", parsed->int_map[i * parsed->x + y]);
-		}
-		printf("\n");
-	}
 	init_game(parsed);
 	parsed->tex_n = load_image(parsed, parsed->path_to_north);
 	parsed->tex_s = load_image(parsed, parsed->path_to_south);

@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 16:16:35 by hadufer           #+#    #+#             */
-/*   Updated: 2022/03/29 16:23:22 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/03/30 19:42:06 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	draw2d(t_data *data)
 {
 	draw_background(data, 0x696969);
 	draw_square(data, new_vec2(0, data->s_height / 2),
-	new_vec2(data->s_width, data->s_height),
+		new_vec2(data->s_width, data->s_height),
 		t_color_to_int(data->ceiling_color));
 	draw_square(data, new_vec2(0, 0),
 		new_vec2(data->s_width, data->s_height / 2),

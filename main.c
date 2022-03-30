@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 10:46:51 by hadufer           #+#    #+#             */
-/*   Updated: 2022/03/29 16:23:20 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/03/30 19:39:09 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -372,81 +372,47 @@ void	key_handler(int keycode, t_data *data)
 		data->ply.dy = sin(data->ply.a) * 5;
 	}
 	else if (keycode == KEY_ESCAPE)
-		exit(0);
+		free_exit(data, 0, NULL);
 }
 
 // Load image and put it into texture
 int	*load_image(t_data *data, char *path)
 {
-	int *tex;
-	int tmp_bpp = data->bits_per_pixel;
-	int tmp_ll = data->line_length;
-	int tmp_endian = data->endian;
-	void *img_xpm = mlx_xpm_file_to_image(data->mlx, path, &data->img_xpm_width, &data->img_xpm_height);
-	int *xpm_data = (int *)mlx_get_data_addr(img_xpm, &tmp_bpp, &tmp_ll, &tmp_endian);
+	int		*tex;
+	int		tmp_bpp;
+	int		tmp_ll;
+	int		tmp_endian;
+	void	*img_xpm;
+	int		*xpm_data;
+	int		y;
+	int		x;
+
+	y = 0;
+	tmp_bpp = data->bits_per_pixel;
+	tmp_ll = data->line_length;
+	tmp_endian = data->endian;
+	img_xpm = mlx_xpm_file_to_image(data->mlx, path,
+				&data->img_xpm_width, &data->img_xpm_height);
+	if (!img_xpm)
+		free_exit(data, 1, "Error while loading texture");
+	xpm_data = (int *)mlx_get_data_addr(img_xpm,
+				&tmp_bpp, &tmp_ll, &tmp_endian);
 	tex = malloc(sizeof(int) * (data->img_xpm_height * data->img_xpm_width + 1));
-	for (int y = 0; y < data->img_xpm_height; y++)
+	while (y < data->img_xpm_height)
 	{
-		for (int x = 0; x < data->img_xpm_width; x++)
+		x = 0;
+		while (x < data->img_xpm_width)
 		{
-			tex[data->img_xpm_width * y + x] = xpm_data[data->img_xpm_width * y + x];
+			tex[data->img_xpm_width * y + x]
+			= xpm_data[data->img_xpm_width * y + x];
+			x++;
 		}
+		y++;
 	}
 	mlx_destroy_image(data->mlx, img_xpm);
 	return (tex);
 }
 
-void	map_get_ply_pos_fix(t_data *parsed)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < parsed->y)
-	{
-		j = 0;
-		while (j < parsed->x)
-		{
-			if (parsed->int_map[i * parsed->x + j] == 2)
-			{
-				parsed->ply_x = j;
-				parsed->ply_y = i;
-				parsed->int_map[i * parsed->x + j] = 0;
-				return ;
-			}
-			j++;
-		}
-		i++;
-	}
-}
-
-void	init_game(t_data *parsed)
-{
-	parsed->s_height = 500;
-	parsed->s_width = 720;
-	parsed->ply.x = parsed->ply_x * MAPTILE + MAPTILE / 2;
-	parsed->ply.y = parsed->ply_y * MAPTILE + MAPTILE / 2;
-	init_player_direction(parsed);
-	parsed->ply.dx = cos((*parsed).ply.a) * 5;
-	parsed->ply.dy = sin((*parsed).ply.a) * 5;
-	parsed->mlx = mlx_init();
-	parsed->win = mlx_new_window((*parsed).mlx, (*parsed).s_width, (*parsed).s_height, "cub3d");
-	parsed->img = mlx_new_image((*parsed).mlx, (*parsed).s_width, (*parsed).s_height);
-	parsed->addr = mlx_get_data_addr((*parsed).img, &parsed->bits_per_pixel, &parsed->line_length,
-			&parsed->endian);
-}
-
-void	init_player_direction(t_data *parsed)
-{
-	if (parsed->player_direction == 'N')
-		parsed->ply.a = P3;
-	else if (parsed->player_direction == 'S')
-		parsed->ply.a = P2;
-	else if (parsed->player_direction == 'W')
-		parsed->ply.a = PI;
-	else if (parsed->player_direction == 'O')
-		parsed->ply.a = 0;
-}
 
 int	main(int argc, char **argv)
 {
@@ -459,11 +425,6 @@ int	main(int argc, char **argv)
 	parsed->tex_s = load_image(parsed, parsed->path_to_south);
 	parsed->tex_e = load_image(parsed, parsed->path_to_east);
 	parsed->tex_w = load_image(parsed, parsed->path_to_west);
-	if (!parsed->tex_n || !parsed->tex_s || !parsed->tex_e || !parsed->tex_w)
-	{
-		printf("Error while loading texture");
-		return (0);
-	}
 	mlx_hook((*parsed).win, 2, 1L << 0, (void *)key_handler, parsed);
 	mlx_loop_hook((*parsed).mlx, render, parsed);
 	mlx_loop((*parsed).mlx);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nferre <nferre@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 10:47:03 by hadufer           #+#    #+#             */
-/*   Updated: 2022/03/30 10:59:55 by nferre           ###   ########.fr       */
+/*   Updated: 2022/03/30 19:37:21 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,9 @@ void	draw_map_2d(t_data *data);
 void	draw_background(t_data *data, int color);
 void	draw_square(t_data *data, t_vec2 a, t_vec2 b, int color);
 // UTILS
+void	map_get_ply_pos_fix(t_data *parsed);
+int		*load_image(t_data *data, char *path);
+void	free_exit(t_data *parsed, int code, char *print_msg_newline);
 void	plotLineWidth(t_data *data, int x0, int y0, int x1, int y1, float wd, int color);
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 int		create_trgb(int t, int r, int g, int b);
@@ -104,4 +107,7 @@ void	draw_line(t_data *data, t_vec2 a, t_vec2 b, int color);
 t_vec2	new_vec2(float x, float y);
 int		t_color_to_int(t_color col);
 float	dist_2d(float x0, float y0, float x1, float y1);
+void	init_game(t_data *parsed);
+void	init_player_direction(t_data *parsed);
+void	free_exit(t_data *parsed, int code, char *print_msg_newline);
 #endif

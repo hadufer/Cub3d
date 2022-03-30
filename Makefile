@@ -6,14 +6,14 @@
 #    By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/12 10:41:12 by hadufer           #+#    #+#              #
-#    Updated: 2022/03/26 19:04:27 by hadufer          ###   ########.fr        #
+#    Updated: 2022/03/29 16:18:54 by hadufer          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3d
 CC = gcc
 RM = rm -f
-CFLAGS = -g
+CFLAGS = -Wall -Wextra -Werror -g
 
 SRCS =	$(wildcard *.c) \
 		$(wildcard srcs/*.c) \

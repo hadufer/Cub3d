@@ -6,16 +6,13 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 10:46:51 by hadufer           #+#    #+#             */
-/*   Updated: 2022/03/29 16:04:38 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/03/29 16:23:20 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 #include <math.h>
 #include <stdlib.h>
-
-int		img_xpm_width;
-int		img_xpm_height;
 
 void	draw_square(t_data *data, int x0, int y0, int x1, int y1, int color)
 {
@@ -54,7 +51,7 @@ void	draw_background(t_data *data, int color)
 	}
 }
 
-void plotLineWidth(t_data *data, int x0, int y0, int x1, int y1, float wd, int color)
+void	plotLineWidth(t_data *data, int x0, int y0, int x1, int y1, float wd, int color)
 {
 	int dx = abs(x1 - x0), sx = x0 < x1 ? 1 : -1;
 	int dy = abs(y1 - y0), sy = y0 < y1 ? 1 : -1;
@@ -90,12 +87,16 @@ void plotLineWidth(t_data *data, int x0, int y0, int x1, int y1, float wd, int c
 
 void	draw_map_2d(t_data *data)
 {
-	int	x, y, xo, yo;
-	int	color;
+	int	xo;
+	int	yo;
+	int	x;
+	int	y;
 
-	for (size_t y = 0; y < data->y; y++)
+	y = 0;
+	while (y < data->y)
 	{
-		for (size_t x = 0; x < data->x; x++)
+		x = 0;
+		while (x < data->x)
 		{
 			xo = x * MAPTILE / 4;
 			yo = y * MAPTILE / 4;
@@ -103,13 +104,10 @@ void	draw_map_2d(t_data *data)
 				draw_square(data, xo + 1, yo + 1, xo + MAPTILE / 4 - 1, yo + MAPTILE / 4 - 1, 0x00000000);
 			else if (data->int_map[y * data->x + x] == 0)
 				draw_square(data, xo + 1, yo + 1, xo + MAPTILE / 4 - 1, yo + MAPTILE / 4 - 1, 0x00FFFFFF);
+			x++;
 		}
+		y++;
 	}
-}
-
-float	dist_2d(float x0, float y0, float x1, float y1, float ang)
-{
-	return (sqrt((x1 - x0) * (x1 - x0) + (y1 - y0) * (y1 - y0)));
 }
 
 void	compute_draw_ray(t_data *data)
@@ -128,7 +126,7 @@ void	compute_draw_ray(t_data *data)
 	{
 		dof = 0;
 		float	nTan = -tan(ra);
-		data->ply.distV = 1000000;
+		data->ply.distv = 1000000;
 		data->ply.vx = data->ply.x;
 		data->ply.vy = data->ply.y;
 		if (ra > P2 && ra < P3)
@@ -160,7 +158,7 @@ void	compute_draw_ray(t_data *data)
 			{
 				data->ply.vx = rx;
 				data->ply.vy = ry;
-				data->ply.distV = dist_2d(data->ply.x, data->ply.y, data->ply.vx, data->ply.vy, data->ply.a);
+				data->ply.distv = dist_2d(data->ply.x, data->ply.y, data->ply.vx, data->ply.vy);
 				dof = data->x;
 			}
 			else
@@ -174,7 +172,7 @@ void	compute_draw_ray(t_data *data)
 		// Horizontal ray collide with wall
 		dof = 0;
 		float	aTan = -1/tan(ra);
-		data->ply.distH = 1000000;
+		data->ply.disth = 1000000;
 		data->ply.hx = data->ply.x;
 		data->ply.hy = data->ply.y;
 		if (ra > PI)
@@ -206,7 +204,7 @@ void	compute_draw_ray(t_data *data)
 			{
 				data->ply.hx = rx;
 				data->ply.hy = ry;
-				data->ply.distH = dist_2d(data->ply.x, data->ply.y, data->ply.hx, data->ply.hy, data->ply.a);
+				data->ply.disth = dist_2d(data->ply.x, data->ply.y, data->ply.hx, data->ply.hy);
 				dof = data->y;
 			}
 			else
@@ -216,17 +214,17 @@ void	compute_draw_ray(t_data *data)
 				dof += 1;
 			}
 		}
-		if (data->ply.distV < data->ply.distH)
+		if (data->ply.distv < data->ply.disth)
 		{
 			rx = data->ply.vx;
 			ry = data->ply.vy;
-			distT = data->ply.distV;
+			distT = data->ply.distv;
 		}
-		if (data->ply.distH < data->ply.distV)
+		if (data->ply.disth < data->ply.distv)
 		{
 			rx = data->ply.hx;
 			ry = data->ply.hy;
-			distT = data->ply.distH;
+			distT = data->ply.disth;
 		}
 		float ca = data->ply.a - ra;
 		if (ca < 0)
@@ -247,7 +245,7 @@ void	compute_draw_ray(t_data *data)
 		int y = 0;
 		float ty = ty_off * ty_step;
 		float tx;
-		if (data->ply.distV < data->ply.distH)
+		if (data->ply.distv < data->ply.disth)
 		{
 			tx = (int)(ry/2.0)%32;
 			tx = 31 - tx;
@@ -260,14 +258,14 @@ void	compute_draw_ray(t_data *data)
 		while (y < lineH)
 		{
 			int tex;
-			if ((ra < P2 || ra > P3) && data->ply.distV < data->ply.distH)
-				tex = *(int *)(data->texE + (int)ty * 32 + (int)(tx));
-			else if ((ra > P2 && ra < P3) && data->ply.distV < data->ply.distH)
-				tex = *(int *)(data->texW + (int)ty * 32 + (int)(tx));
-			else if ((ra > 0 && ra < PI) && data->ply.distV > data->ply.distH)
-				tex = *(int *)(data->texS + (int)ty * 32 + (int)(tx));
+			if ((ra < P2 || ra > P3) && data->ply.distv < data->ply.disth)
+				tex = *(int *)(data->tex_e + (int)ty * 32 + (int)(tx));
+			else if ((ra > P2 && ra < P3) && data->ply.distv < data->ply.disth)
+				tex = *(int *)(data->tex_w + (int)ty * 32 + (int)(tx));
+			else if ((ra > 0 && ra < PI) && data->ply.distv > data->ply.disth)
+				tex = *(int *)(data->tex_s + (int)ty * 32 + (int)(tx));
 			else
-				tex = *(int *)(data->texN + (int)ty * 32 + (int)(tx));
+				tex = *(int *)(data->tex_n + (int)ty * 32 + (int)(tx));
 			if (y + lineO + 3 <= data->s_height)
 				draw_square(data, r * 3, y + lineO, r * 3 + 3, y + lineO + 3, tex);
 			ty += ty_step;
@@ -379,38 +377,18 @@ int	*load_image(t_data *data, char *path)
 	int tmp_bpp = data->bits_per_pixel;
 	int tmp_ll = data->line_length;
 	int tmp_endian = data->endian;
-	void *img_xpm = mlx_xpm_file_to_image(data->mlx, path, &img_xpm_width, &img_xpm_height);
+	void *img_xpm = mlx_xpm_file_to_image(data->mlx, path, &data->img_xpm_width, &data->img_xpm_height);
 	int *xpm_data = (int *)mlx_get_data_addr(img_xpm, &tmp_bpp, &tmp_ll, &tmp_endian);
-	tex = malloc(sizeof(int) * (img_xpm_height * img_xpm_width + 1));
-	for (int y = 0; y < img_xpm_height; y++)
+	tex = malloc(sizeof(int) * (data->img_xpm_height * data->img_xpm_width + 1));
+	for (int y = 0; y < data->img_xpm_height; y++)
 	{
-		for (int x = 0; x < img_xpm_width; x++)
+		for (int x = 0; x < data->img_xpm_width; x++)
 		{
-			tex[img_xpm_width * y + x] = xpm_data[img_xpm_width * y + x];
+			tex[data->img_xpm_width * y + x] = xpm_data[data->img_xpm_width * y + x];
 		}
 	}
 	mlx_destroy_image(data->mlx, img_xpm);
 	return (tex);
-}
-
-void	Draw2d(t_data *data)
-{
-	draw_background(data, 0x696969);
-	// Floor
-	draw_square(data, 0, data->s_height / 2, data->s_width, data->s_height, t_color_to_int(data->ceiling_color));
-	// Sky
-	draw_square(data, 0, 0, data->s_width, data->s_height / 2, t_color_to_int(data->floor_color));
-	compute_draw_ray(data);
-	draw_map_2d(data);
-}
-
-int	render(t_data *data)
-{
-	mlx_destroy_image(data->mlx, data->img);
-	data->img = mlx_new_image(data->mlx, data->s_width, data->s_height);
-	Draw2d(data);
-	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
-	return (0);
 }
 
 void	map_get_ply_pos_fix(t_data *parsed)
@@ -437,14 +415,34 @@ void	map_get_ply_pos_fix(t_data *parsed)
 	}
 }
 
-int	t_color_to_int(t_color col)
-{
-	int	ret;
 
-	ret = col.r << 16;
-	ret |= col.g << 8;
-	ret |= col.b << 0;
-	return (ret);
+void	init_game(t_data *parsed)
+{
+	parsed->s_height = 500;
+	parsed->s_width = 720;
+	parsed->ply.x = parsed->ply_x * MAPTILE + MAPTILE / 2;
+	parsed->ply.y = parsed->ply_y * MAPTILE + MAPTILE / 2;
+	init_player_direction(parsed);
+	parsed->ply.dx = cos((*parsed).ply.a) * 5;
+	parsed->ply.dy = sin((*parsed).ply.a) * 5;
+	parsed->mlx = mlx_init();
+	parsed->win = mlx_new_window((*parsed).mlx, (*parsed).s_width, (*parsed).s_height, "cub3d");
+	parsed->img = mlx_new_image((*parsed).mlx, (*parsed).s_width, (*parsed).s_height);
+	parsed->addr = mlx_get_data_addr((*parsed).img, &parsed->bits_per_pixel, &parsed->line_length,
+			&parsed->endian);
+}
+
+
+void	init_player_direction(t_data *parsed)
+{
+	if (parsed->player_direction == 'N')
+		parsed->ply.a = P3;
+	else if (parsed->player_direction == 'S')
+		parsed->ply.a = P2;
+	else if (parsed->player_direction == 'W')
+		parsed->ply.a = PI;
+	else if (parsed->player_direction == 'O')
+		parsed->ply.a = 0;
 }
 
 int	main(int argc, char **argv)
@@ -461,31 +459,16 @@ int	main(int argc, char **argv)
 		}
 		printf("\n");
 	}
-	(*parsed).s_height = 500;
-	(*parsed).s_width = 720;
-	(*parsed).ply.x = parsed->ply_x * MAPTILE + MAPTILE / 2;
-	(*parsed).ply.y = parsed->ply_y * MAPTILE + MAPTILE / 2;
-	if (parsed->player_direction == 'N')
-		parsed->ply.a = P3;
-	else if (parsed->player_direction == 'S')
-		parsed->ply.a = P2;
-	else if (parsed->player_direction == 'W')
-		parsed->ply.a = PI;
-	else if (parsed->player_direction == 'O')
-		parsed->ply.a = 0;
-	(*parsed).ply.dx = cos((*parsed).ply.a) * 5;
-	(*parsed).ply.dy = sin((*parsed).ply.a) * 5;
-	(*parsed).mlx = mlx_init();
-	(*parsed).win = mlx_new_window((*parsed).mlx, (*parsed).s_width, (*parsed).s_height, "cub3d");
-	(*parsed).img = mlx_new_image((*parsed).mlx, (*parsed).s_width, (*parsed).s_height);
-	(*parsed).addr = mlx_get_data_addr((*parsed).img, &parsed->bits_per_pixel, &parsed->line_length,
-			&parsed->endian);
-	(*parsed).texN = load_image(parsed, "./textures/grass.xpm");
-	(*parsed).texS = load_image(parsed, "./textures/brick.xpm");
-	(*parsed).texE = load_image(parsed, "./textures/metal.xpm");
-	(*parsed).texW = load_image(parsed, "./textures/stone.xpm");
-	if (!parsed->texN || !parsed->texS || !parsed->texE || !parsed->texW)
-		return (1);
+	init_game(parsed);
+	parsed->tex_n = load_image(parsed, parsed->path_to_north);
+	parsed->tex_s = load_image(parsed, parsed->path_to_south);
+	parsed->tex_e = load_image(parsed, parsed->path_to_east);
+	parsed->tex_w = load_image(parsed, parsed->path_to_west);
+	if (!parsed->tex_n || !parsed->tex_s || !parsed->tex_e || !parsed->tex_w)
+	{
+		printf("Error while loading texture");
+		return (0);
+	}
 	mlx_hook((*parsed).win, 2, 1L << 0, (void *)key_handler, parsed);
 	mlx_loop_hook((*parsed).mlx, render, parsed);
 	mlx_loop((*parsed).mlx);

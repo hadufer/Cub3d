@@ -33,9 +33,9 @@ typedef struct s_texture_coords
 
 }	t_texture_coords;
 
-typedef struct s_color t_color;
+typedef struct s_color	t_color;
 
-typedef struct s_data t_data;
+typedef struct s_data	t_data;
 
 //parsing
 
@@ -65,6 +65,7 @@ void				check_ceiling(char **file,
 void				check_texture_existence(t_data *data);
 void				check_colors(char *path, t_texture_coords texture_coords);
 void				check_if_map_empty(char *path);
+void				check_number_texture(t_data *data);
 void				check_map(t_data *data);
 void				get_textures(t_data *data);
 void				get_int_map(t_data *data);

@@ -6,7 +6,7 @@
 /*   By: nferre <nferre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 10:47:03 by hadufer           #+#    #+#             */
-/*   Updated: 2022/03/30 09:58:10 by nferre           ###   ########.fr       */
+/*   Updated: 2022/03/30 10:59:55 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,6 @@
 # define KEY_LEFT 123
 # define KEY_RIGHT 124
 # define MAPTILE 64
-# define max(a,b) \
-   ({ __typeof__ (a) _a = (a); \
-       __typeof__ (b) _b = (b); \
-     _a > _b ? _a : _b; })
 # include <mlx.h>
 # include "cube.h"
 # include "parsing.h"
@@ -52,12 +48,10 @@ typedef struct s_player
 	float		a;
 	float		dx;
 	float		dy;
-
-	// raycast
-	float		distH;
+	float		disth;
 	float		hx;
 	float		hy;
-	float		distV;
+	float		distv;
 	float		vx;
 	float		vy;
 }				t_player;
@@ -72,10 +66,12 @@ typedef struct s_data {
 	int			endian;
 	int			s_width;
 	int			s_height;
-	int			*texN;
-	int			*texS;
-	int			*texE;
-	int			*texW;
+	int			*tex_n;
+	int			*tex_s;
+	int			*tex_e;
+	int			*tex_w;
+	int			img_xpm_width;
+	int			img_xpm_height;
 	char		*path_to_north;
 	char		*path_to_south;
 	char		*path_to_east;
@@ -90,12 +86,22 @@ typedef struct s_data {
 	t_player	ply;
 	int			ply_x;
 	int			ply_y;
-	char	player_direction;
-}				t_data;
+	char		player_direction;
+}					t_data;
 
+void	draw2d(t_data *data);
+int		render(t_data *data);
+void	init_player_direction(t_data *parsed);
+void	compute_draw_ray(t_data *data);
+void	draw_map_2d(t_data *data);
+void	draw_background(t_data *data, int color);
+void	draw_square(t_data *data, int x0, int y0, int x1, int y1, int color);
 // UTILS
+void	plotLineWidth(t_data *data, int x0, int y0, int x1, int y1, float wd, int color);
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 int		create_trgb(int t, int r, int g, int b);
 void	draw_line(t_data *data, t_vec2 a, t_vec2 b, int color);
 t_vec2	new_vec2(float x, float y);
+int		t_color_to_int(t_color col);
+float	dist_2d(float x0, float y0, float x1, float y1);
 #endif

@@ -12,7 +12,7 @@
 
 #include "parsing.h"
 
-void	check_yep(char *line)
+void	check_xpm(char *line)
 {
 	int	i;
 
@@ -48,12 +48,12 @@ void	check_existence(char *line)
 
 void	check_texture_existence(t_data *data)
 {
-	check_yep(data->path_to_north);
+	check_xpm(data->path_to_north);
 	check_existence(data->path_to_north);
-	check_yep(data->path_to_south);
+	check_xpm(data->path_to_south);
 	check_existence(data->path_to_south);
-	check_yep(data->path_to_east);
+	check_xpm(data->path_to_east);
 	check_existence(data->path_to_east);
-	check_yep(data->path_to_west);
+	check_xpm(data->path_to_west);
 	check_existence(data->path_to_west);
 }

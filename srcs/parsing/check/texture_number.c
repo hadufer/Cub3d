@@ -6,7 +6,7 @@
 /*   By: nferre <nferre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 16:18:06 by nferre            #+#    #+#             */
-/*   Updated: 2022/03/29 16:35:54 by nferre           ###   ########.fr       */
+/*   Updated: 2022/03/30 10:40:18 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	check_texture_map(t_data *data, char x, char y)
 {	
 	int	i;
 	int	j;
-	int temp;
+	int	temp;
 
 	temp = 0;
 	i = -1;
@@ -36,7 +36,7 @@ void	check_texture_map(t_data *data, char x, char y)
 	if (temp != 1)
 	{
 		printf("Error\nInvalid number of textures\n");
-		exit(1) ;
+		exit(1);
 	}
 }
 

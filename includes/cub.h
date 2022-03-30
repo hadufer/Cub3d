@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nferre <nferre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 10:47:03 by hadufer           #+#    #+#             */
-/*   Updated: 2022/03/29 15:59:50 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/03/30 09:58:10 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,13 +77,9 @@ typedef struct s_data {
 	int			*texE;
 	int			*texW;
 	char		*path_to_north;
-	t_color		north_texture;
 	char		*path_to_south;
-	t_color		south_texture;
 	char		*path_to_east;
-	t_color		east_texture;
 	char		*path_to_west;
-	t_color		west_texture;
 	t_color		floor_color;
 	t_color		ceiling_color;
 	char		**map;

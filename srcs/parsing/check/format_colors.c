@@ -1,42 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_utils.c                                      :+:      :+:    :+:   */
+/*   format_colors.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nferre <nferre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/17 07:46:03 by nferre            #+#    #+#             */
-/*   Updated: 2022/03/30 10:39:25 by nferre           ###   ########.fr       */
+/*   Created: 2022/03/30 10:17:52 by nferre            #+#    #+#             */
+/*   Updated: 2022/03/30 10:39:51 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-void	print_tab(char **map)
+void	check_line(char *line)
 {
 	int	i;
+	int	temp;
 
+	temp = 0;
 	i = -1;
-	while (map[++i])
-		printf("%s\n", map[i]);
-}
-
-void	print_color(t_color color)
-{
-	printf("r : %d\n", color.r);
-	printf("g : %d\n", color.g);
-	printf("b : %d\n", color.b);
-}
-
-void	print_int_tab(int *tab, int x, int y)
-{
-	int	i;
-
-	i = -1;
-	while (++i != x * y)
+	while (line[++i])
 	{
-		printf("%d", tab[i]);
-		if (i % x == x - 1)
-			printf("\n");
+		if (line[i] == ',')
+			temp++;
 	}
+	if (temp != 2)
+	{
+		printf("Error\nInvalid format in colors\n");
+		exit(1);
+	}
+}
+
+void	check_format_colors(t_data *data, t_texture_coords texture_coords)
+{
+	char	*line;
+
+	line = get_path(data->file, texture_coords.c, 1);
+	check_line(line);
 }

@@ -6,7 +6,7 @@
 /*   By: nferre <nferre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 08:24:26 by nferre            #+#    #+#             */
-/*   Updated: 2022/03/21 08:29:58 by nferre           ###   ########.fr       */
+/*   Updated: 2022/03/30 09:51:37 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	check_yep(char *line)
 	i = 0;
 	while (line[i])
 		i++;
-	if (i < 4 || line[i - 1] != 'p' || line[i - 2] != 'e'
-		|| line[i - 3] != 'y' || line[i - 4] != '.')
+	if (i < 4 || line[i - 1] != 'm' || line[i - 2] != 'p'
+		|| line[i - 3] != 'x' || line[i - 4] != '.')
 	{
 		printf("Error\nInvalid map extension for textures\n");
 		exit(1);

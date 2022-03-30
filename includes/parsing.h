@@ -6,7 +6,7 @@
 /*   By: nferre <nferre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 12:54:53 by nferre            #+#    #+#             */
-/*   Updated: 2022/03/29 16:29:59 by nferre           ###   ########.fr       */
+/*   Updated: 2022/03/30 10:26:01 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ void				check_map(t_data *data);
 void				get_textures(t_data *data);
 void				get_int_map(t_data *data);
 void				check_texture_map(t_data *data, char x, char y);
+void				check_number_texture(t_data *data);
+void				check_format_colors(t_data *data, t_texture_coords texture_coords);
 
 //utils
 
@@ -79,5 +81,7 @@ char				*get_file(char *path);
 int					condition(char *file, int i);
 void				init_coords(t_texture_coords *texture_coords);
 void				print_color(t_color color);
+char				*get_path(char **file, t_coords coords, int i);
+
 
 #endif

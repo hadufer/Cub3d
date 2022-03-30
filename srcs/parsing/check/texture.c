@@ -26,11 +26,9 @@ void	assign(int *last, char *c, int i, char direction)
 
 int	get_last(t_texture_coords texture_coords)
 {
-	int		i;
 	int		last;
 	char	c;
 
-	i = 0;
 	last = 0;
 	if (texture_coords.no.i > last)
 		assign(&last, &c, texture_coords.no.i, 'N');
@@ -78,10 +76,8 @@ int	get_i(t_texture_coords texture_coords, char *path)
 
 int	check_texture(char *path, t_texture_coords *texture_coords)
 {
-	int		i;
 	char	**file;
 
-	i = 0;
 	file = parse_file(path);
 	check_north(file, texture_coords);
 	check_south(file, texture_coords);

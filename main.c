@@ -379,35 +379,32 @@ void	key_handler(int keycode, t_data *data)
 int	*load_image(t_data *data, char *path)
 {
 	int		*tex;
-	int		tmp_bpp;
-	int		tmp_ll;
-	int		tmp_endian;
 	void	*img_xpm;
 	int		*xpm_data;
-	int		y;
-	int		x;
+	int		tab[5];
 
-	y = 0;
-	tmp_bpp = data->bits_per_pixel;
-	tmp_ll = data->line_length;
-	tmp_endian = data->endian;
+	tab[3] = 0;
+	tab[0] = data->bits_per_pixel;
+	tab[1] = data->line_length;
+	tab[2] = data->endian;
 	img_xpm = mlx_xpm_file_to_image(data->mlx, path,
-				&data->img_xpm_width, &data->img_xpm_height);
+			&data->img_xpm_width, &data->img_xpm_height);
 	if (!img_xpm)
 		free_exit(data, 1, "Error while loading texture");
 	xpm_data = (int *)mlx_get_data_addr(img_xpm,
-				&tmp_bpp, &tmp_ll, &tmp_endian);
-	tex = malloc(sizeof(int) * (data->img_xpm_height * data->img_xpm_width + 1));
-	while (y < data->img_xpm_height)
+			&tab[0], &tab[1], &tab[2]);
+	tex = malloc(sizeof(int)
+			* (data->img_xpm_height * data->img_xpm_width + 1));
+	while (tab[3] < data->img_xpm_height)
 	{
-		x = 0;
-		while (x < data->img_xpm_width)
+		tab[4] = 0;
+		while (tab[4] < data->img_xpm_width)
 		{
-			tex[data->img_xpm_width * y + x]
-			= xpm_data[data->img_xpm_width * y + x];
-			x++;
+			tex[data->img_xpm_width * tab[3] + tab[4]]
+				= xpm_data[data->img_xpm_width * tab[3] + tab[4]];
+			tab[4]++;
 		}
-		y++;
+		tab[3]++;
 	}
 	mlx_destroy_image(data->mlx, img_xpm);
 	return (tex);

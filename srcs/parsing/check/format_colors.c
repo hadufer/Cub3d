@@ -27,6 +27,7 @@ void	check_line(char *line)
 	if (temp != 2)
 	{
 		printf("Error\nInvalid format in colors\n");
+		free(line);
 		exit(1);
 	}
 }
@@ -37,4 +38,5 @@ void	check_format_colors(t_data *data, t_texture_coords texture_coords)
 
 	line = get_path(data->file, texture_coords.c, 1);
 	check_line(line);
+	free(line);
 }

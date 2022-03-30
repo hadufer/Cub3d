@@ -68,17 +68,8 @@ void	init_player_direction(t_data *parsed)
 		parsed->ply.a = 0;
 }
 
-void	free_exit(t_data *parsed, int code, char *print_msg_newline)
+void	free_exit2(t_data *parsed, char *print_msg_newline)
 {
-	int	i;
-
-	i = 0;
-	free(parsed->file);
-	while (parsed->map[i])
-	{
-		free(parsed->map[i]);
-		i++;
-	}
 	free(parsed->map);
 	free(parsed->int_map);
 	free(parsed->path_to_east);
@@ -95,7 +86,25 @@ void	free_exit(t_data *parsed, int code, char *print_msg_newline)
 		free(parsed->tex_n);
 	if (print_msg_newline)
 		printf("%s\n", print_msg_newline);
-	while (1)
-	{}
+}
+
+void	free_exit(t_data *parsed, int code, char *print_msg_newline)
+{
+	int	i;
+
+	i = 0;
+	while (parsed->file[i])
+	{
+		free(parsed->file[i]);
+		i++;
+	}
+	free(parsed->file);
+	i = 0;
+	while (parsed->map[i])
+	{
+		free(parsed->map[i]);
+		i++;
+	}
+	free_exit2(parsed, print_msg_newline);
 	exit(code);
 }

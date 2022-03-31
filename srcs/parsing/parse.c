@@ -91,9 +91,8 @@ t_data	*parse(int argc, char **argv)
 	data = malloc(sizeof(t_data));
 	texture_coords = checker(argv[1], data, argc);
 	get_paths(data, texture_coords);
-	// get_textures(data);
 	check_texture_existence(data);
-	// get_colors(data, texture_coords);
+	get_colors(data, texture_coords);
 	get_int_map(data);
 	return (data);
 }

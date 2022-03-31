@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 16:16:35 by hadufer           #+#    #+#             */
-/*   Updated: 2022/03/30 19:42:06 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/03/31 13:51:35 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,14 @@ int	render(t_data *data)
 	draw2d(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
 	return (0);
+}
+
+float	p2f(void)
+{
+	return (PI / 2);
+}
+
+float	p3f(void)
+{
+	return (3 * PI / 2);
 }

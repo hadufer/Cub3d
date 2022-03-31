@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   format_colors.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nferre <nferre@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 10:17:52 by nferre            #+#    #+#             */
-/*   Updated: 2022/03/30 10:39:51 by nferre           ###   ########.fr       */
+/*   Updated: 2022/03/31 15:24:30 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@ void	check_line(char *line)
 	}
 }
 
-void	check_format_colors(t_data *data, t_texture_coords texture_coords)
+void	check_format_colors(t_data *data, t_texture_coords t_c)
 {
 	char	*line;
 
-	line = get_path(data->file, texture_coords.c, 1);
+	line = get_path(data->file, t_c.c, 1);
 	check_line(line);
 	free(line);
 }

@@ -6,15 +6,13 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 10:47:03 by hadufer           #+#    #+#             */
-/*   Updated: 2022/03/30 19:37:21 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/03/31 15:23:43 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB_H
 # define CUB_H
 # define PI 3.14159265359
-# define P2 PI/2
-# define P3 3*PI/2
 # define DR 0.01745329252
 # define KEY_ESCAPE 53
 # define KEY_S 1
@@ -96,11 +94,18 @@ void	compute_draw_ray(t_data *data);
 void	draw_map_2d(t_data *data);
 void	draw_background(t_data *data, int color);
 void	draw_square(t_data *data, t_vec2 a, t_vec2 b, int color);
+void	key_handler(int keycode, t_data *data);
+void	compute_draw_ray_vertical(t_data *data, int *tab, float *tabf);
+void	compute_draw_ray_vertical2(t_data *data, int *tab, float *tabf);
+void	compute_draw_ray_horizontal(t_data *data, int *tab, float *tabf);
+void	compute_draw_ray_horizontal2(t_data *data, int *tab, float *tabf);
+void	compute_draw_ray_dist_init_line(t_data *data, int *tab, float *tabf);
+void	compute_draw_ray_tex(t_data *data, int *tab, float *tabf);
+void	compute_draw_ray_init_line_arg(t_data *data, int *tab, float *tabf);
 // UTILS
 void	map_get_ply_pos_fix(t_data *parsed);
 int		*load_image(t_data *data, char *path);
 void	free_exit(t_data *parsed, int code, char *print_msg_newline);
-void	plotLineWidth(t_data *data, int x0, int y0, int x1, int y1, float wd, int color);
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 int		create_trgb(int t, int r, int g, int b);
 void	draw_line(t_data *data, t_vec2 a, t_vec2 b, int color);
@@ -110,4 +115,7 @@ float	dist_2d(float x0, float y0, float x1, float y1);
 void	init_game(t_data *parsed);
 void	init_player_direction(t_data *parsed);
 void	free_exit(t_data *parsed, int code, char *print_msg_newline);
+void	fix_angle(float *a);
+float	p3f(void);
+float	p2f(void);
 #endif

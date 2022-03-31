@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 19:25:04 by hadufer           #+#    #+#             */
-/*   Updated: 2022/03/30 19:37:16 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/03/31 13:52:24 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,9 @@ void	init_game(t_data *parsed)
 void	init_player_direction(t_data *parsed)
 {
 	if (parsed->player_direction == 'N')
-		parsed->ply.a = P3;
+		parsed->ply.a = p3f();
 	else if (parsed->player_direction == 'S')
-		parsed->ply.a = P2;
+		parsed->ply.a = p2f();
 	else if (parsed->player_direction == 'W')
 		parsed->ply.a = PI;
 	else if (parsed->player_direction == 'O')

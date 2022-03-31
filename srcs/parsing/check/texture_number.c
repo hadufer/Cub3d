@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture_number.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nferre <nferre@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 16:18:06 by nferre            #+#    #+#             */
-/*   Updated: 2022/03/30 10:40:18 by nferre           ###   ########.fr       */
+/*   Updated: 2022/03/31 15:48:20 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	check_texture_map(t_data *data, char x, char y)
 			if (data->file[i][j] == x && data->file[i][j + 1] == y
 				&& data->file[i][j + 1] != '\0')
 			{
-				printf("%d %d\n", i, j);
 				temp++;
 			}
 		}

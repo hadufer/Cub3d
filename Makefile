@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nferre <nferre@student.42.fr>              +#+  +:+       +#+         #
+#    By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/12 10:41:12 by hadufer           #+#    #+#              #
-#    Updated: 2022/03/31 15:44:32 by nferre           ###   ########.fr        #
+#    Updated: 2022/03/31 15:47:01 by hadufer          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3d
 CC = gcc
 RM = rm -f
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror
 
 SRCS =	./mlx_utils.c   \
 ./draw_ray_util.c   \

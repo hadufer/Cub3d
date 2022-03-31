@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 10:46:51 by hadufer           #+#    #+#             */
-/*   Updated: 2022/03/31 13:41:52 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/03/31 16:11:15 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,12 @@ void	draw_map_2d(t_data *data)
 	}
 }
 
+int	close_w(t_data *parsed)
+{
+	free_exit(parsed, 0, NULL);
+	return (0);
+}
+
 int	main(int argc, char **argv)
 {
 	t_data	*parsed;
@@ -92,6 +98,7 @@ int	main(int argc, char **argv)
 	parsed->tex_e = load_image(parsed, parsed->path_to_east);
 	parsed->tex_w = load_image(parsed, parsed->path_to_west);
 	mlx_hook((*parsed).win, 2, 1L << 0, (void *)key_handler, parsed);
+	mlx_hook(parsed->win, 17, 0, close_w, parsed);
 	mlx_loop_hook((*parsed).mlx, render, parsed);
 	mlx_loop((*parsed).mlx);
 }
